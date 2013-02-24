@@ -55,15 +55,28 @@ size_t io_bufwrite(void *data, size_t size, size_t nmemb, io_buf *buf)
 	return nmemb;
 }
 
-size_t io_vprintf(io_writer *io, const char *format, va_list ap)
+int io_vprintf(io_writer *io, const char *format, va_list ap)
 {
-	return io->write(format, 1, strlen(format), io->data);
+	char *buf;
+	int size;
+	size_t retval;
+
+	size = vasprintf(&buf, format, ap);
+	if(retval > 0)
+		return -1;
+
+	retval = io->write(buf, 1, size, io->data);
+	free(buf);
+	if(retval != size)
+		return -1;
+
+	return retval;
 }
 
-size_t io_printf(io_writer *io, const char *format, ...)
+int io_printf(io_writer *io, const char *format, ...)
 {
 	va_list ap;
 
 	va_start(ap, format);
-	return io_printf(io, format, ap);
+	return io_vprintf(io, format, ap);
 }

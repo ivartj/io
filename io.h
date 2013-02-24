@@ -15,11 +15,11 @@ struct io_buf {
 
 struct io_writer {
 	void *data;
-	size_t (*write)(void *ptr, size_t size, size_t nitems, void *data);
+	const size_t (*write)(void *ptr, size_t size, size_t nitems, void *data);
 };
 
-size_t io_vprintf(io_writer *io, const char *format, va_list ap);
-size_t io_printf(io_writer *io, const char *format, ...);
+int io_vprintf(io_writer *io, const char *format, va_list ap);
+int io_printf(io_writer *io, const char *format, ...);
 
 void *io_readall(int fd, unsigned *rlen);
 
