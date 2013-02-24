@@ -62,7 +62,7 @@ int io_vprintf(io_writer *io, const char *format, va_list ap)
 	size_t retval;
 
 	size = vasprintf(&buf, format, ap);
-	if(retval > 0)
+	if(retval < 0)
 		return -1;
 
 	retval = io->write(buf, 1, size, io->data);
