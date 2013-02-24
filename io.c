@@ -76,3 +76,8 @@ int io_printf(io_writer *io, const char *format, ...)
 	return io_vprintf(io, format, ap);
 	va_end(ap);
 }
+
+int io_putc(io_writer *io, unsigned char c)
+{
+	return io->write(&c, 1, 1, io->data);
+}

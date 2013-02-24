@@ -21,6 +21,9 @@ struct io_writer {
 int io_vprintf(io_writer *io, const char *format, va_list ap);
 int io_printf(io_writer *io, const char *format, ...);
 
+/* unlike fputc, returns number of bytes written */
+int io_putc(io_writer *io, unsigned char c);
+
 void *io_readall(int fd, unsigned *rlen);
 
 size_t io_bufwrite(void *data, size_t size, size_t nmemb, io_buf *buf);
