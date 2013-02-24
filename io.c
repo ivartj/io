@@ -19,11 +19,6 @@ void *io_readall(int fd, unsigned *rlen)
 		data = realloc(data, cap);
 	}
 
-	if(len < 0) {
-		free(data);
-		return NULL;
-	}
-
 	if(rlen != NULL)
 		*rlen = len;
 
