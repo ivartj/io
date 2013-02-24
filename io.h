@@ -27,5 +27,6 @@ int io_putc(io_writer *io, unsigned char c);
 void *io_readall(int fd, unsigned *rlen);
 
 size_t io_bufwrite(void *data, size_t size, size_t nmemb, io_buf *buf);
+int io_vasprintf(char **ptr, const char *format, va_list ap);
 
 #endif

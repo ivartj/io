@@ -56,7 +56,7 @@ int io_vprintf(io_writer *io, const char *format, va_list ap)
 	int size;
 	size_t retval;
 
-	size = vasprintf(&buf, format, ap);
+	size = io_vasprintf(&buf, format, ap);
 	if(retval < 0)
 		return -1;
 
@@ -80,4 +80,20 @@ int io_printf(io_writer *io, const char *format, ...)
 int io_putc(io_writer *io, unsigned char c)
 {
 	return io->write(&c, 1, 1, io->data);
+}
+
+int io_vasprintf(char **ptr, const char *format, va_list oap)
+{
+	char *str;
+	size_t size;
+	va_list ap;
+
+	va_copy(ap, oap);
+	size = vsnprintf(NULL, 0, format, ap);
+	va_end(ap);
+
+	str = malloc(size + 1);
+	*ptr = str;
+
+	return vsnprintf(str, size + 1, format, oap);
 }
