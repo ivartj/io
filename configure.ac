@@ -9,6 +9,7 @@ AM_PROG_LIBTOOL
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_FILES([
 	Makefile
+	tests/Makefile
 	ivartjio.pc
 ])
 AC_OUTPUT

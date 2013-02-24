@@ -54,3 +54,16 @@ size_t io_bufwrite(void *data, size_t size, size_t nmemb, io_buf *buf)
 
 	return nmemb;
 }
+
+size_t io_vprintf(io_writer *io, const char *format, va_list ap)
+{
+	return io->write(format, 1, strlen(format), io->data);
+}
+
+size_t io_printf(io_writer *io, const char *format, ...)
+{
+	va_list ap;
+
+	va_start(ap, format);
+	return io_printf(io, format, ap);
+}

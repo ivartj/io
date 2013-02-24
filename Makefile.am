@@ -1,4 +1,5 @@
 ACLOCAL_AMFLAGS = -I m4
+SUBDIRS = tests
 
 ivartjincludedir = $(includedir)/ivartj
 ivartjinclude_HEADERS = io.h
