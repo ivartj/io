@@ -15,7 +15,7 @@ struct io_buf {
 
 struct io_writer {
 	void *data;
-	const size_t (*write)(void *ptr, size_t size, size_t nitems, void *data);
+	size_t (*write)(void *ptr, size_t size, size_t nitems, void *data);
 };
 
 int io_vprintf(io_writer *io, const char *format, va_list ap);
