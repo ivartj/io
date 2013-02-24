@@ -19,11 +19,6 @@ void *io_readall(int fd, unsigned *rlen)
 		data = realloc(data, cap);
 	}
 
-	if(len < 0) {
-		free(data);
-		return NULL;
-	}
-
 	if(rlen != NULL)
 		*rlen = len;
 
@@ -79,4 +74,5 @@ int io_printf(io_writer *io, const char *format, ...)
 
 	va_start(ap, format);
 	return io_vprintf(io, format, ap);
+	va_end(ap);
 }
