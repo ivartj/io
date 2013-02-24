@@ -74,4 +74,5 @@ int io_printf(io_writer *io, const char *format, ...)
 
 	va_start(ap, format);
 	return io_vprintf(io, format, ap);
+	va_end(ap);
 }
