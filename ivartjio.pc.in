@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: ivartjio
+Description: I/O utility functions.
+Version: @VERSION@
+Libs: -L${libdir} -livartjio
+Cflags: -I${includedir}
