@@ -25,6 +25,26 @@ void *io_readall(int fd, unsigned *rlen)
 	return data;
 }
 
+size_t io_bufread(void *data, size_t size, size_t nitems, io_buf *buf)
+{
+	size_t scribed;
+
+	if(buf->len == 0)
+		return 0;
+
+	scribed = nitems * size;
+	if(scribed > buf->len - buf->off) {
+		scribed = buf->len - buf->off;
+		nitems = scribed / size;
+		scribed = nitems * size;
+	}
+
+	memcpy(data, buf->buf + buf->off, scribed);
+	buf->off += scribed;
+
+	return nitems;
+}
+
 size_t io_bufwrite(void *data, size_t size, size_t nmemb, io_buf *buf)
 {
 	size_t written;
@@ -80,6 +100,17 @@ int io_printf(io_writer *io, const char *format, ...)
 int io_putc(io_writer *io, unsigned char c)
 {
 	return io->write(&c, 1, 1, io->data);
+}
+
+int io_getc(io_reader *r)
+{
+	size_t n;
+	unsigned char c;
+
+	n = r->read(&c, 1, 1, r->data);
+	if(n == 0)
+		return EOF;
+	return c;
 }
 
 int io_vasprintf(char **ptr, const char *format, va_list oap)
