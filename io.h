@@ -32,10 +32,22 @@ int io_printf(io_writer *io, const char *format, ...);
 int io_putc(io_writer *io, unsigned char c);
 int io_getc(io_reader *r);
 
-void *io_readall(int fd, unsigned *rlen);
+void *io_readall(io_reader *r, ssize_t *rlen);
+void *io_fdreadall(int fd, unsigned *rlen);
 
-size_t io_bufwrite(void *data, size_t size, size_t nmemb, io_buf *buf);
-size_t io_bufread(void *data, size_t size, size_t nmemb, io_buf *buf);
+size_t io_bufwrite(void *data, size_t size, size_t nmemb, void *buf);
+size_t io_bufread(void *data, size_t size, size_t nmemb, void *buf);
 int io_vasprintf(char **ptr, const char *format, va_list ap);
+
+ssize_t io_getdelim(char **linep, size_t *linecapp, int delim, io_reader *r);
+ssize_t io_getline(char **linep, size_t *linecapp, io_reader *r);
+
+typedef size_t (*io_readfn)(void *data, size_t size, size_t nitems, void *);
+typedef size_t (*io_writefn)(void *data, size_t size, size_t nitems, void *);
+
+size_t io_fread(void *ptr, size_t size, size_t nitems, void *stream);
+size_t io_fwrite(void *ptr, size_t size, size_t nitems, void *stream);
+
+void io_route(io_reader *r, io_writer *w);
 
 #endif
